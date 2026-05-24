@@ -22,8 +22,7 @@ function Login() {
 
       setLoading(true);
 
-      const API = import.meta.env.VITE_API_URL;
-
+      const API = "https://placement-tracker-0yh8.onrender.com";
       const res = await axios.post(
         `${API}/api/auth/login`,
         { email, password }
