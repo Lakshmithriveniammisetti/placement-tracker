@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
+
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -18,16 +19,16 @@ function Login() {
     }
 
     try {
+
       setLoading(true);
 
       const API = import.meta.env.VITE_API_URL;
 
-const res = await axios.post(
-  `${API}/api/auth/login`,
-  { email, password }
-);
+      const res = await axios.post(
+        `${API}/api/auth/login`,
+        { email, password }
+      );
 
-      // store user
       localStorage.setItem("user", JSON.stringify(res.data));
 
       alert("Login Successful ✅");
@@ -35,57 +36,84 @@ const res = await axios.post(
       navigate("/dashboard");
 
     } catch (err) {
+
+      console.log(err);
+
       alert(err?.response?.data?.msg || "Login failed ❌");
+
     } finally {
+
       setLoading(false);
+
     }
   };
 
   return (
     <div style={{
+      height: "100vh",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      height: "100vh",
-      background: "#f3f4f6"
+      background: "linear-gradient(135deg, #0f172a, #1e293b)"
     }}>
 
       <div style={{
-        width: "350px",
-        padding: "30px",
+        width: "400px",
         background: "white",
-        borderRadius: "12px",
-        boxShadow: "0 5px 20px rgba(0,0,0,0.1)"
+        padding: "40px",
+        borderRadius: "20px",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.3)"
       }}>
 
-        <h2 style={{ textAlign: "center" }}>Login</h2>
+        <h1 style={{
+          textAlign: "center",
+          color: "#0f172a",
+          marginBottom: "10px"
+        }}>
+          Placement Tracker
+        </h1>
 
-        {/* EMAIL */}
+        <p style={{
+          textAlign: "center",
+          color: "#64748b",
+          marginBottom: "30px"
+        }}>
+          Track Placements, DSA & Interview Prep 🚀
+        </p>
+
         <input
-          placeholder="Email"
+          type="email"
+          placeholder="Enter Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={{
             width: "100%",
-            padding: "10px",
-            marginTop: "15px",
-            borderRadius: "8px",
-            border: "1px solid #ccc"
+            padding: "14px",
+            borderRadius: "10px",
+            border: "1px solid #cbd5e1",
+            marginBottom: "20px",
+            fontSize: "15px",
+            outline: "none"
           }}
         />
 
-        {/* PASSWORD */}
-        <div style={{ position: "relative", marginTop: "15px" }}>
+        <div style={{
+          position: "relative",
+          marginBottom: "20px"
+        }}>
+
           <input
             type={show ? "text" : "password"}
-            placeholder="Password"
+            placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             style={{
               width: "100%",
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #ccc"
+              padding: "14px",
+              borderRadius: "10px",
+              border: "1px solid #cbd5e1",
+              fontSize: "15px",
+              outline: "none"
             }}
           />
 
@@ -93,37 +121,50 @@ const res = await axios.post(
             onClick={() => setShow(!show)}
             style={{
               position: "absolute",
-              right: "10px",
-              top: "10px",
+              right: "15px",
+              top: "14px",
               cursor: "pointer"
             }}
           >
-            {show ? "🙈" : "👁"}
+            {show ? "🙈" : "👁️"}
           </span>
+
         </div>
 
-        {/* BUTTON */}
         <button
           onClick={submit}
           disabled={loading}
           style={{
             width: "100%",
-            marginTop: "20px",
-            padding: "10px",
+            padding: "14px",
             border: "none",
-            borderRadius: "8px",
-            background: "#2e7d6d",
+            borderRadius: "10px",
+            background: "#0f766e",
             color: "white",
-            fontWeight: "bold",
+            fontSize: "16px",
+            fontWeight: "600",
             cursor: "pointer"
           }}
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* SIGNUP */}
-        <p style={{ textAlign: "center", marginTop: "15px" }}>
-          New user? <Link to="/signup">Signup</Link>
+        <p style={{
+          textAlign: "center",
+          marginTop: "20px",
+          color: "#475569"
+        }}>
+          New User?{" "}
+          <Link
+            to="/signup"
+            style={{
+              color: "#0f766e",
+              textDecoration: "none",
+              fontWeight: "600"
+            }}
+          >
+            Create Account
+          </Link>
         </p>
 
       </div>
