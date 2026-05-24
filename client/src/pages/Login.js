@@ -20,10 +20,12 @@ function Login() {
     try {
       setLoading(true);
 
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        { email, password }
-      );
+      const API = import.meta.env.VITE_API_URL;
+
+const res = await axios.post(
+  `${API}/api/auth/login`,
+  { email, password }
+);
 
       // store user
       localStorage.setItem("user", JSON.stringify(res.data));

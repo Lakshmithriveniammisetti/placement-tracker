@@ -1,30 +1,24 @@
-
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-const connectDB = require("./config/db");
+const app = express();
 
-const app = express();   // ✅ FIRST create app
-
-// Middleware
-app.use(cors());
 app.use(express.json());
 
-// Connect Database
-connectDB();
+app.use(cors({
+  origin: "https://placement-tracker-frontend.netlify.app",
+  credentials: true
+}));
 
-// Routes (after app created)
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/tasks", require("./routes/taskRoutes"));
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB Connected"))
+.catch((err) => console.log(err));
 
-// Test route
-app.get("/", (req, res) => {
-  res.send("API Running...");
-});
+app.use("/api/users", require("./routes/userRoutes"));
 
-// Start server
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
