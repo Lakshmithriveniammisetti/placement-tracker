@@ -7,15 +7,16 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({
-  origin: "https://placement-tracker-frontend.netlify.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch((err) => console.log(err));
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
 
 app.use("/api/auth", require("./routes/authRoutes"));
 
